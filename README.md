@@ -2,7 +2,47 @@
 
 API de gerenciamento de tarefas (To-Do List) com autenticação de usuários, escrita em **FastAPI**, usando **SQLAlchemy** para banco de dados e seguindo boas práticas de Python.
 
-Este projeto é compatível com padrões de nível pleno/sênior: tipagem, docstrings, logging, testes automatizados, CI/CD e estrutura modular.
+---
+
+## **Deploy / Acesso Online**
+
+A API também está disponível online para testes:
+
+- Documentação interativa: [https://todo-api-prt6.onrender.com/docs](https://todo-api-prt6.onrender.com/docs)
+
+Você pode usar a documentação para registrar usuários, logar e gerenciar tarefas diretamente no navegador ou via ferramentas como `curl` e Postman.
+
+Exemplo `curl` (Windows CMD) para registrar usuário:
+
+```cmd
+curl -X POST "https://todo-api-prt6.onrender.com/users/register" ^
+-H "Content-Type: application/json" ^
+-d "{\"username\": \"meu_usuario\", \"password\": \"minha_senha\"}"
+```
+
+Exemplo `curl` para login e obter token:
+
+```cmd
+curl -X POST "https://todo-api-prt6.onrender.com/users/login" ^
+-H "Content-Type: application/x-www-form-urlencoded" ^
+-d "username=meu_usuario&password=minha_senha"
+```
+
+Exemplo `curl` para criar uma tarefa (substitua SEU_TOKEN_AQUI pelo token JWT retornado no login):
+
+```cmd
+curl -X POST "https://todo-api-prt6.onrender.com/tasks/" ^
+-H "Content-Type: application/json" ^
+-H "Authorization: Bearer SEU_TOKEN_AQUI" ^
+-d "{\"title\": \"Teste online\", \"completed\": false}"
+```
+
+Exemplo `curl` para listar tarefas:
+
+```cmd
+curl -X GET "https://todo-api-prt6.onrender.com/tasks" ^
+-H "Authorization: Bearer SEU_TOKEN_AQUI"
+```
 
 ---
 
@@ -107,7 +147,7 @@ http://127.0.0.1:8000/docs
 
 Rodar todos os testes automatizados:
 
-```powershell
+```bash
 pytest -v --cov=app --cov-report=term-missing
 flake8 app tests
 black --check app tests
